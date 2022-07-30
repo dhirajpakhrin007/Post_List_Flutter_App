@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:listing_showcase_app/data/data_provider/apiservice.dart';
-import 'package:listing_showcase_app/data/repository/list_repo.dart';
 import 'package:listing_showcase_app/logic/comment_cubit/comment_cubit.dart';
 import 'package:listing_showcase_app/logic/list_cubit/list_cubit.dart';
+import 'package:listing_showcase_app/logic/user_cubit/user_cubit.dart';
 import 'package:listing_showcase_app/presentation/List/list_detail.dart';
-import 'package:listing_showcase_app/presentation/List/list_home.dart';
+import 'package:listing_showcase_app/presentation/Users/users_home.dart';
+import 'package:listing_showcase_app/presentation/homepage.dart';
+import 'package:listing_showcase_app/presentation/comment/postComment.dart';
 import 'package:listing_showcase_app/presentation/comment/showComment.dart';
+
+import 'logic/comment_bloc/comment_bloc.dart';
 
 void main() {
   runApp(const MyApp());
-  ApiRepository().getCommentFromId(13);
 }
 
 class MyApp extends StatelessWidget {
@@ -27,6 +29,12 @@ class MyApp extends StatelessWidget {
         BlocProvider<CommentCubit>(
           create: (context) => CommentCubit(),
         ),
+        BlocProvider<CommentBloc>(
+          create: (context) => CommentBloc(),
+        ),
+        BlocProvider<UserCubit>(
+          create: (context) => UserCubit()..getUserList(),
+        ),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -38,6 +46,8 @@ class MyApp extends StatelessWidget {
           HomePage.id: (context) => const HomePage(),
           ListDetail.id: (context) => const ListDetail(),
           ShowComment.id: (context) => ShowComment(),
+          PostComment.id: (context) => PostComment(),
+          UserHome.id: (context) => UserHome(),
         },
       ),
     );
