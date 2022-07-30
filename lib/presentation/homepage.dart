@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:listing_showcase_app/presentation/List/list_detail.dart';
+import 'package:listing_showcase_app/presentation/Users/users_home.dart';
+import 'package:listing_showcase_app/presentation/comment/postComment.dart';
 
-import '../../logic/list_cubit/list_cubit.dart';
+import '../logic/list_cubit/list_cubit.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -19,6 +21,27 @@ class HomePage extends StatelessWidget {
             children: [
               UserButton(
                 bName: 'See List of posts',
+                navigate: () {
+                  Navigator.pushNamed(context, ListDetail.id);
+                },
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              UserButton(
+                bName: 'Post Your Comment',
+                navigate: () {
+                  Navigator.pushNamed(context, PostComment.id);
+                },
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              UserButton(
+                bName: 'See Users',
+                navigate: () {
+                  Navigator.pushNamed(context, UserHome.id);
+                },
               )
             ],
           ),
@@ -30,16 +53,17 @@ class HomePage extends StatelessWidget {
 
 class UserButton extends StatelessWidget {
   final String bName;
+  final Function() navigate;
   const UserButton({
+    Key? key,
     required this.bName,
-  });
+    required this.navigate,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, ListDetail.id);
-      },
+      onTap: navigate,
       child: Container(
         alignment: Alignment.center,
         decoration: BoxDecoration(color: Colors.white, boxShadow: [

@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:listing_showcase_app/data/model/comment_model.dart';
-import 'package:listing_showcase_app/data/repository/list_repo.dart';
+import 'package:listing_showcase_app/data/repository/api_repo.dart';
 
 part 'comment_state.dart';
 
