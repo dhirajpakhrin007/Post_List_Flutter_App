@@ -1,85 +1,89 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:listing_showcase_app/presentation/List/list_detail.dart';
 import 'package:listing_showcase_app/presentation/Users/users_home.dart';
 import 'package:listing_showcase_app/presentation/comment/postComment.dart';
+import 'package:listing_showcase_app/presentation/widget/custom_appbar.dart';
 
-import '../logic/list_cubit/list_cubit.dart';
+import 'widget/user_button.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
   static const String id = 'listhome';
 
   @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
+  AnimationController? controller;
+  // holds animation controller data
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller =
+        AnimationController(duration: const Duration(seconds: 1), vsync: this);
+    //animation for icon and text of button
+    controller!.forward();
+    controller!.addListener(() {
+      setState(() {});
+      print(controller!.value);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xff1A1A1C).withOpacity(controller!.value),
+      appBar: const CustomAppBar(
+        appBarTitle: 'Home Page',
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(12.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              // list of post button
               UserButton(
                 bName: 'See List of posts',
+                bIcon: Icons.remove_red_eye,
                 navigate: () {
                   Navigator.pushNamed(context, ListDetail.id);
                 },
+                bTextsize: 18 * controller!.value,
+                bIconsize: 30 * controller!.value,
+                // for animating the text and icon
               ),
-              SizedBox(
-                height: 10.0,
+              const SizedBox(
+                height: 30.0,
               ),
+              // Post your comment button
               UserButton(
                 bName: 'Post Your Comment',
+                bIcon: Icons.comment,
                 navigate: () {
                   Navigator.pushNamed(context, PostComment.id);
                 },
+                bTextsize: 18 * controller!.value,
+                bIconsize: 30 * controller!.value,
               ),
-              SizedBox(
-                height: 10.0,
+              const SizedBox(
+                height: 30.0,
               ),
+              //See your user button
               UserButton(
                 bName: 'See Users',
+                bIcon: Icons.person,
                 navigate: () {
                   Navigator.pushNamed(context, UserHome.id);
                 },
+                bTextsize: 18 * controller!.value,
+                bIconsize: 30 * controller!.value,
               )
             ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class UserButton extends StatelessWidget {
-  final String bName;
-  final Function() navigate;
-  const UserButton({
-    Key? key,
-    required this.bName,
-    required this.navigate,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: navigate,
-      child: Container(
-        alignment: Alignment.center,
-        decoration: BoxDecoration(color: Colors.white, boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.8),
-            blurRadius: 5,
-            offset: Offset(0, 7), // changes position of shadow
-          ),
-        ]),
-        height: 50.0,
-        width: double.infinity,
-        child: Text(
-          bName,
-          style: TextStyle(
-            fontSize: 18.0,
-            fontWeight: FontWeight.w600,
           ),
         ),
       ),

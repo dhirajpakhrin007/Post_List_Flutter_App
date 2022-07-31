@@ -23,7 +23,6 @@ class ApiRepository {
 
     final List<CommentModel> comments =
         comment.map((e) => CommentModel.fromJson(e)).toList();
-    print("data: $comments");
     return comments;
   }
 

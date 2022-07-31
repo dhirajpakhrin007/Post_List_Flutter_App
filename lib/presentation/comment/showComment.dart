@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:listing_showcase_app/constant/colors.dart';
+import 'package:listing_showcase_app/constant/style.dart';
 import 'package:listing_showcase_app/logic/comment_cubit/comment_cubit.dart';
+import 'package:listing_showcase_app/presentation/widget/custom_appbar.dart';
 
 class ShowComment extends StatelessWidget {
   static const String id = 'showComment';
@@ -9,14 +12,15 @@ class ShowComment extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Comment By Post Id"),
-      ),
+      backgroundColor: kSecondaryColor,
+      appBar: const CustomAppBar(appBarTitle: "Comment By Post Id"),
       body: BlocBuilder<CommentCubit, CommentState>(
         builder: (context, state) {
           if (state is CommentLoading) {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                color: kprimaryColor,
+              ),
             );
           } else if (state is CommentLoaded) {
             return Padding(
@@ -30,11 +34,20 @@ class ShowComment extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           ListTile(
-                            leading: Text(state.comment[index].id.toString()),
-                            title: Text(state.comment[index].name!),
-                            subtitle: Text(state.comment[index].body!),
+                            leading: Text(
+                              state.comment[index].id.toString(),
+                              style: kListTextStyle,
+                            ),
+                            title: Text(
+                              state.comment[index].name!,
+                              style: kListTitleStyle,
+                            ),
+                            subtitle: Text(
+                              state.comment[index].body!,
+                              style: kListTextStyle,
+                            ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                         ],
@@ -46,7 +59,7 @@ class ShowComment extends StatelessWidget {
             return Text(state.error);
           } else {
             return Container(
-              child: Text('Blank'),
+              child: const Text('Blank'),
             );
           }
         },
