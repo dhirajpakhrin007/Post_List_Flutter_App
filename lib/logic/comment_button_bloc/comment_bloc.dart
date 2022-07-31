@@ -16,10 +16,10 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
     });
     on<CommentButtonPressed>(((event, emit) async {
       emit(CommentInitial());
+
       try {
         final comment = await _apiRepository.getCommentResponse(
             event.name, event.email, event.comment);
-        print("comment: $comment");
 
         emit(CommentFormButtonSubmitted(commentResponseModel: comment));
       } catch (e) {
