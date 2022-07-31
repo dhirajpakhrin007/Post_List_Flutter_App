@@ -62,6 +62,7 @@ class UserHome extends StatelessWidget {
             } else if (state is UserError) {
               return Text(state.error);
             } else {
+              print("empty");
               return Container();
             }
           },

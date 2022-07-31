@@ -9,7 +9,7 @@ import 'package:listing_showcase_app/presentation/homepage.dart';
 import 'package:listing_showcase_app/presentation/comment/postComment.dart';
 import 'package:listing_showcase_app/presentation/comment/showComment.dart';
 
-import 'logic/comment_bloc/comment_bloc.dart';
+import 'logic/comment_button_bloc/comment_bloc.dart';
 
 void main() {
   runApp(const MyApp());
